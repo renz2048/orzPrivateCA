@@ -1,0 +1,104 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            37:7e:5a:78:6a:02:27:f5:0d:64:f6:44:af:6e:66:12
+    Signature Algorithm: ecdsa-with-SHA256
+        Issuer: C=CN, O=orzrz, CN=Root CA
+        Validity
+            Not Before: Dec  1 07:02:09 2021 GMT
+            Not After : Nov 29 07:02:09 2031 GMT
+        Subject: C=CN, O=orzrz, CN=Sub CA
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (256 bit)
+                pub: 
+                    04:90:5c:6d:03:1c:23:7b:2a:52:42:32:ee:36:18:
+                    21:25:3b:e1:04:b1:f8:25:e9:0f:16:56:23:73:02:
+                    fa:02:b3:a7:9c:74:2b:f2:b9:3a:d0:25:23:99:3a:
+                    63:88:d8:17:32:25:9b:eb:7c:60:98:1d:dd:c0:ee:
+                    db:a0:e5:67:a0
+                Field Type: prime-field
+                Prime:
+                    00:ff:ff:ff:ff:00:00:00:01:00:00:00:00:00:00:
+                    00:00:00:00:00:00:ff:ff:ff:ff:ff:ff:ff:ff:ff:
+                    ff:ff:ff
+                A:   
+                    00:ff:ff:ff:ff:00:00:00:01:00:00:00:00:00:00:
+                    00:00:00:00:00:00:ff:ff:ff:ff:ff:ff:ff:ff:ff:
+                    ff:ff:fc
+                B:   
+                    5a:c6:35:d8:aa:3a:93:e7:b3:eb:bd:55:76:98:86:
+                    bc:65:1d:06:b0:cc:53:b0:f6:3b:ce:3c:3e:27:d2:
+                    60:4b
+                Generator (uncompressed):
+                    04:6b:17:d1:f2:e1:2c:42:47:f8:bc:e6:e5:63:a4:
+                    40:f2:77:03:7d:81:2d:eb:33:a0:f4:a1:39:45:d8:
+                    98:c2:96:4f:e3:42:e2:fe:1a:7f:9b:8e:e7:eb:4a:
+                    7c:0f:9e:16:2b:ce:33:57:6b:31:5e:ce:cb:b6:40:
+                    68:37:bf:51:f5
+                Order: 
+                    00:ff:ff:ff:ff:00:00:00:00:ff:ff:ff:ff:ff:ff:
+                    ff:ff:bc:e6:fa:ad:a7:17:9e:84:f3:b9:ca:c2:fc:
+                    63:25:51
+                Cofactor:  1 (0x1)
+                Seed:
+                    c4:9d:36:08:86:e7:04:93:6a:66:78:e1:13:9d:26:
+                    b7:81:9f:7e:90
+        X509v3 extensions:
+            Authority Information Access: 
+                CA Issuers - URI:http://ec-sub-ca.orzrz.com/ec-sub-ca.crt
+                OCSP - URI:http://ocsp.ec-sub-ca.orzrz.com:9081
+
+            X509v3 Authority Key Identifier: 
+                keyid:49:14:22:2A:C4:03:DE:3A:66:93:C3:6E:18:0E:C4:06:C8:58:10:2D
+
+            X509v3 Basic Constraints: critical
+                CA:TRUE, pathlen:0
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:http://ec-sub-ca.orzrz.com/ec-sub-ca.crl
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication, TLS Web Server Authentication
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+            X509v3 Name Constraints: 
+                Permitted:
+                  DNS:orzrz.com
+                  DNS:orzrz.org
+                Excluded:
+                  IP:0.0.0.0/0.0.0.0
+                  IP:0:0:0:0:0:0:0:0/0:0:0:0:0:0:0:0
+
+            X509v3 Subject Key Identifier: 
+                A5:27:B7:DF:D3:83:89:4B:1D:34:08:6C:26:47:A5:A1:32:4B:C4:A7
+    Signature Algorithm: ecdsa-with-SHA256
+         30:45:02:21:00:ec:72:98:ec:53:42:4e:85:43:e1:54:a1:1d:
+         aa:7c:a8:a3:38:b5:34:a6:3f:8c:70:25:f6:4b:4b:18:a9:54:
+         53:02:20:20:52:36:15:c9:85:42:19:c9:f6:23:43:06:9e:d8:
+         85:7b:1d:85:f5:1f:93:89:54:6c:ee:dd:cf:43:0b:9a:93
+-----BEGIN CERTIFICATE-----
+MIID5DCCA4qgAwIBAgIQN35aeGoCJ/UNZPZEr25mEjAKBggqhkjOPQQDAjAvMQsw
+CQYDVQQGEwJDTjEOMAwGA1UECgwFb3J6cnoxEDAOBgNVBAMMB1Jvb3QgQ0EwHhcN
+MjExMjAxMDcwMjA5WhcNMzExMTI5MDcwMjA5WjAuMQswCQYDVQQGEwJDTjEOMAwG
+A1UECgwFb3J6cnoxDzANBgNVBAMMBlN1YiBDQTCCAUswggEDBgcqhkjOPQIBMIH3
+AgEBMCwGByqGSM49AQECIQD/////AAAAAQAAAAAAAAAAAAAAAP//////////////
+/zBbBCD/////AAAAAQAAAAAAAAAAAAAAAP///////////////AQgWsY12Ko6k+ez
+671VdpiGvGUdBrDMU7D2O848PifSYEsDFQDEnTYIhucEk2pmeOETnSa3gZ9+kARB
+BGsX0fLhLEJH+Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT+NC4v4af5uO5+tKfA+e
+FivOM1drMV7Oy7ZAaDe/UfUCIQD/////AAAAAP//////////vOb6racXnoTzucrC
+/GMlUQIBAQNCAASQXG0DHCN7KlJCMu42GCElO+EEsfgl6Q8WViNzAvoCs6ecdCvy
+uTrQJSOZOmOI2BcyJZvrfGCYHd3A7tug5Wego4IBkzCCAY8wdgYIKwYBBQUHAQEE
+ajBoMDQGCCsGAQUFBzAChihodHRwOi8vZWMtc3ViLWNhLm9yenJ6LmNvbS9lYy1z
+dWItY2EuY3J0MDAGCCsGAQUFBzABhiRodHRwOi8vb2NzcC5lYy1zdWItY2Eub3J6
+cnouY29tOjkwODEwHwYDVR0jBBgwFoAUSRQiKsQD3jpmk8NuGA7EBshYEC0wEgYD
+VR0TAQH/BAgwBgEB/wIBADA5BgNVHR8EMjAwMC6gLKAqhihodHRwOi8vZWMtc3Vi
+LWNhLm9yenJ6LmNvbS9lYy1zdWItY2EuY3JsMB0GA1UdJQQWMBQGCCsGAQUFBwMC
+BggrBgEFBQcDATAOBgNVHQ8BAf8EBAMCAQYwVwYDVR0eBFAwTqAaMAuCCW9yenJ6
+LmNvbTALgglvcnpyei5vcmehMDAKhwgAAAAAAAAAADAihyAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAADAdBgNVHQ4EFgQUpSe339ODiUsdNAhsJkeloTJL
+xKcwCgYIKoZIzj0EAwIDSAAwRQIhAOxymOxTQk6FQ+FUoR2qfKijOLU0pj+McCX2
+S0sYqVRTAiAgUjYVyYVCGcn2I0MGntiFex2F9R+TiVRs7t3PQwuakw==
+-----END CERTIFICATE-----

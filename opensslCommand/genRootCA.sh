@@ -1,16 +1,32 @@
 #!/bin/sh
 
 
-HOME=rsa-root-ca
+while getopts "a:" opt
+do
+	case "$opt" in
+	n) CNAME=$OPTARG;;
+	a) ALG=$OPTARG;;
+	*) echo "Unknown option: $opt";;
+	esac
+done
+
+if [ $# -ne 2 ]
+then
+    echo "Usage: $0 -a [rsa|ec]"
+    exit 1;
+fi
+
+
+HOME=$ALG-root-ca
 CERT_PATH=$HOME/certs
 DB_PATH=$HOME/db
 PRIVATE_PATH=$HOME/private
 
-CONF=$HOME/rsa-root-ca.conf
+CONF=$HOME/$ALG-root-ca.conf
 
-CSR=$CERT_PATH/rsa-root-ca.csr
-CRT=$CERT_PATH/rsa-root-ca.crt
-KEY=$PRIVATE_PATH/rsa-root-ca.key
+CSR=$CERT_PATH/$ALG-root-ca.csr
+CRT=$CERT_PATH/$ALG-root-ca.crt
+KEY=$PRIVATE_PATH/$ALG-root-ca.key
 
 
 mkdir -p $CERT_PATH $DB_PATH $PRIVATE_PATH
@@ -21,7 +37,7 @@ echo 1001 > $DB_PATH/crlnumber
 
 cat >> $CONF <<EOF
 [default]
-name                    = rsa-root-ca
+name                    = $ALG-root-ca
 domain_suffix           = orzrz.com
 aia_url                 = http://\$name.\$domain_suffix/\$name.crt
 crl_url                 = http://\$name.\$domain_suffix/\$name.crl
@@ -36,7 +52,7 @@ commonName              = "Root CA"
 
 
 [ca_default]
-home                    = rsa-root-ca
+home                    = $ALG-root-ca
 database                = \$home/db/index
 serial                  = \$home/db/serial
 crlnumber               = \$home/db/crlnumber
@@ -47,7 +63,7 @@ new_certs_dir           = \$home/certs
 unique_subject          = no
 copy_extensions         = copy
 default_days            = 3650
-default_crl_days        = 365
+default_crl_days        = 730
 default_md              = sha256
 policy                  = policy_c_o_match
 
@@ -109,9 +125,17 @@ keyUsage                = critical,digitalSignature
 subjectKeyIdentifier    = hash
 EOF
 
+# 生成 key ：
+if [ "$ALG"x = "rsa"x ]; then
+openssl genpkey -out $KEY.secure -algorithm RSA -pkeyopt rsa_keygen_bits:2048
+else
+openssl genpkey -out $KEY.secure -algorithm EC -pkeyopt ec_paramgen_curve:P-256
+fi
 
-# 生成 key 和 CSR：
-openssl req -new -config $CONF -out $CSR -keyout $KEY
+# 去除 key 的 pass phrase
+openssl $ALG -in $KEY.secure -out $KEY
+# 创建 CSR：
+openssl req -new -config $CONF -key $KEY -out $CSR
 
 # 自签发
 openssl ca -selfsign -config $CONF -in $CSR -out $CRT -extensions ca_ext
