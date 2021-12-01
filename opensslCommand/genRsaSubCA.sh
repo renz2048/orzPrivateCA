@@ -131,5 +131,5 @@ EOF
 # 生成 key 和 CSR：
 openssl req -new -config $CONF -out $CSR -keyout $KEY
 
-# 自签发
+# RootCA 签发：
 openssl ca -config $CONF -in $CSR -out $CRT -extensions sub_ca_ext
