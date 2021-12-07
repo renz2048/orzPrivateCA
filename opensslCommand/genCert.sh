@@ -4,7 +4,7 @@
 while getopts "n:a:" opt
 do
 	case "$opt" in
-	n) CNAME=$OPTARG;;
+	n) NAME=$OPTARG;;
 	a) ALG=$OPTARG;;
 	*) echo "Unknown option: $opt";;
 	esac
@@ -16,12 +16,18 @@ then
     exit 1;
 fi
 
+if [ "$ALG"x != "rsa"x || "$ALG"x != "ec"x ]; then
+    echo " -a [rsa|ec]"
+    exit 1;
+fi
 
-HOME=$ALG-$CNAME
-CONF=$HOME/$ALG-$CNAME.conf
-CSR=$HOME/$ALG-$CNAME.csr
-CRT=$HOME/$ALG-$CNAME.crt
-KEY=$HOME/$ALG-$CNAME.key
+
+HOME=www.$ALG-$NAME.com
+CNAME=www.$ALG-$NAME.com
+CONF=$HOME/$CNAME.conf
+CSR=$HOME/$CNAME.csr
+CRT=$HOME/$CNAME.crt
+KEY=$HOME/$CNAME.key
 SUBCACONF=$ALG-sub-ca/$ALG-sub-ca.conf
 
 mkdir -p $HOME
@@ -42,7 +48,7 @@ L = Beijing
 C = CN
 
 [ext]
-subjectAltName = DNS:www.example.com,DNS:example.com
+subjectAltName = DNS:www.$NAME.com,DNS:$NAME.com
 EOF
 
 
