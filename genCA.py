@@ -7,6 +7,7 @@ from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 import datetime
+import os
 
 class certProducer():
     def __init__(self, common_name) -> None:
@@ -21,6 +22,11 @@ class certProducer():
         self.common_name = common_name
         self.file_name = common_name.replace(' ', '')
         self.validity_day = 365
+
+        self.tempcerts_dir = 'tempcerts/'
+
+        # 若不存在 tempcerts, 则创建; 若已存在 tempcerts, 则忽略.
+        os.makedirs(self.tempcerts_dir, mode=622, exist_ok=True)
 
     def setKeySize(self, key_size) -> None:
         self.key_size = key_size
@@ -54,11 +60,19 @@ class certProducer():
         )
 
         # 保存私钥到磁盘，并使用 key pass 进行加密
-        with open(self.file_name + ".key", "wb") as f:
+        with open(self.tempcerts_dir + self.file_name + ".key.secure", "wb") as f:
             f.write(self.key.private_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PrivateFormat.TraditionalOpenSSL,
-                encryption_algorithm=serialization.BestAvailableEncryption(self.key_pass_phrase),
+                encryption_algorithm=serialization.BestAvailableEncryption(self.key_pass_phrase)
+            ))
+
+        # 保存私钥到磁盘, 不加密
+        with open(self.tempcerts_dir + self.file_name + ".key.unsecure", "wb") as f:
+            f.write(self.key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PrivateFormat.TraditionalOpenSSL,
+                encryption_algorithm=serialization.NoEncryption()
             ))
 
     def genSelfSignCert(self):
@@ -89,8 +103,11 @@ class certProducer():
             critical=False,
         # 使用root CA的私钥签发root CA证书
         ).sign(self.key, hashes.SHA256())
+
+        # 若不存在 tempcerts, 则创建; 若已存在 tempcerts, 则忽略.
+        os.makedirs(self.tempcerts_dir, mode=622, exist_ok=True)
         # 保存证书到磁盘
-        with open(self.file_name + ".pem", "wb") as f:
+        with open(self.tempcerts_dir + self.file_name + ".pem", "wb") as f:
             f.write(self.cert.public_bytes(serialization.Encoding.PEM))
 
     def genCert(self, cert, key) -> None:
@@ -122,7 +139,10 @@ class certProducer():
             critical=False,
         # Sign our certificate with our private key
         ).sign(key, hashes.SHA256())
-        with open(self.file_name + ".pem", "wb") as f:
+
+        # 若不存在 tempcerts, 则创建; 若已存在 tempcerts, 则忽略.
+        os.makedirs(self.tempcerts_dir, mode=622, exist_ok=True)
+        with open(self.tempcerts_dir + self.file_name + ".pem", "wb") as f:
             f.write(self.cert.public_bytes(serialization.Encoding.PEM))
 
 class CAStore(cap.caArgParser):
@@ -130,6 +150,7 @@ class CAStore(cap.caArgParser):
         self.rootca = certProducer("orz root CA")
         self.subca = certProducer("orz sub CA")
         self.user = certProducer('www.example.com')
+
     def createCA(self) -> None:
         self.rootca.setValidityDay(3650)
         self.rootca.genPrivateKey()
