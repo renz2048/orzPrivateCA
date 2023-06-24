@@ -48,6 +48,7 @@ class certProducer():
 
     def setCommonName(self, common_name) -> None:
         self.common_name = common_name
+        self.file_name = common_name.replace(' ', '')
 
     def setValidityDay(self, validity_day) -> None:
         self.validity_day = validity_day
@@ -162,6 +163,7 @@ class CAStore(cap.caArgParser):
 
         self.user.genPrivateKey()
         self.user.genCert(self.subca.cert, self.subca.key)
+
     def loadCA(self, cert_path, key_path) -> None:
         with open(cert_path, 'rb') as f:
             datas = f.read()
@@ -169,6 +171,7 @@ class CAStore(cap.caArgParser):
         with open(key_path, 'rb') as f:
             datas = f.read()
             self.subca.key = serialization.load_pem_private_key(datas,b'12345678')
+
     def createUserCert(self) -> None:
         self.user.setCommonName(self.opt.common_name)
         self.user.genPrivateKey()
@@ -178,8 +181,7 @@ class CAStore(cap.caArgParser):
         self.createCA()
 
     def _user_handler(self) -> None:
-        print(self.opt.common_name)
-        self.loadCA('certs/orzsubCA.pem', 'certs/orzsubCA.key')
+        self.loadCA('certs/orzsubCA.pem', 'certs/orzsubCA.key.secure')
         self.createUserCert()
 
 def main():
